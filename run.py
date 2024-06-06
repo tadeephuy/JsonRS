@@ -61,13 +61,17 @@ def main():
         # Convert processed data back to JSON
         processed_json = json.dumps(processed_data, indent=4)
 
-        # Create a download button
-        st.download_button(
-            label=":printer: Download Processed JSON",
-            data=processed_json,
-            file_name="processed_data.json",
-            mime="application/json"
-        )
+        with col2:
+            with col2_2:
+                n,e = os.path.splitext(uploaded_file.name)
+                down_name = f'{n}_qa.json'
+                # Create a download button
+                st.download_button(
+                    label=":printer: Download Processed JSON",
+                    data=processed_json,
+                    file_name=down_name,
+                    mime="application/json"
+                )
         
         with col1:     
             # st.write("Original JSON:")
