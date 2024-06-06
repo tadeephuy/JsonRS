@@ -24,7 +24,7 @@ def rotate_point(point, ang_in_radian, origin=(0, 0)):
     xr =  xr + xo  
     yr =  yr + yo
     
-    return (xr, yr)
+    return (round(xr), round(yr))
 
 
 def process(data, angle=0, center=(0,0)):
