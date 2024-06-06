@@ -6,19 +6,25 @@ import os
 
 st.set_page_config(layout="wide")
 
-def rotate_point_reverse(point, angle, center):
-    x,y = point
-    xc,yc = center
+def rotate_point(point, ang_in_radian, origin=(0, 0)):
+    """Rotate point around the defined origin"""
+
+    x, y = point
+    xo, yo = origin
     
-    x = x - xc
-    y = y - yc
+    xc = x - xo
+    yc = y - yo
     
-    x = x*math.cos(-angle) - y*math.sin(-angle)
-    y = x*math.sin(-angle) + y*math.cos(-angle)
+    ang_sin = math.sin(ang_in_radian)
+    ang_cos = math.cos(ang_in_radian)
     
-    x = round(x + xc, 0)
-    y = round(y + yc, 0)
-    return (x,y)
+    xr = xc*ang_cos - yc*ang_sin
+    yr = xc*ang_sin + yc*ang_cos
+    
+    xr =  xr + xo  
+    yr =  yr + yo
+    
+    return (xr, yr)
 
 
 def process(data, angle=0, center=(0,0)):
@@ -26,7 +32,7 @@ def process(data, angle=0, center=(0,0)):
     # rotate points
     new_points = []
     for p in data['geometry']['points']:
-        pr = rotate_point_reverse((p['x'], p['y']), angle=angle, center=center)
+        pr = rotate_point((p['x'], p['y']), -angle, origin=center)
         new_points.append({'id': p['id'], 'x': pr[0], 'y': pr[1]})
     new_data['geometry']['points'] = new_points
     
