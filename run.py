@@ -50,12 +50,12 @@ def main():
     with col2:
         col2_1, col2_2, col2_3 = st.columns(3)
         with col2_1:
-            x = st.number_input('x offset:', value=None)
+            x = st.number_input('x offset:', value=None, step=1, placeholder=0)
             process_button = st.button('Process')
         with col2_2:
-            y = st.number_input('y offset:', value=None)
+            y = st.number_input('y offset:', value=None, step=1, placeholder=0)
         with col2_3:
-            angle = st.number_input('rotate angle:', value=None)
+            angle = st.number_input('rotate angle:', value=None, step=0.001, placeholder=0, format='%f')
             
     
     if process_button  and (uploaded_file is not None) :
