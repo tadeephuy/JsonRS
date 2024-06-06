@@ -36,7 +36,6 @@ def get_wall_vector(wall_id, data):
 
 def get_length(wall_id, data):
     vector = get_wall_vector(wall_id, data)
-    # print(vector)
     return math.sqrt(vector[0]**2 + vector[1]**2)
 
 def process(data, angle=0, center=(0,0)):
@@ -47,14 +46,12 @@ def process(data, angle=0, center=(0,0)):
         pr = rotate_point((p['x'], p['y']), -angle, origin=center)
         new_points.append({'id': p['id'], 'x': pr[0], 'y': pr[1]})
     new_data['geometry']['points'] = new_points
-    
-    # add wall length
-    geometry = new_data['geometry']
 
-    for item in new_data['geometry']['walls']:
-        length = get_length(item['id'], geometry)
-        item['length'] = length
-        
+    # add wall length
+    for i, item in enumerate(new_data['geometry']['walls']):
+        length = get_length(item['id'], new_data['geometry'])
+        new_data['geometry']['walls'][i]['length'] = length
+
     return new_data
 
 def main():
