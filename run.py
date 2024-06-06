@@ -20,6 +20,18 @@ def rotate_point_reverse(point, angle, center):
     y = round(y + yc, 0)
     return (x,y)
 
+def get_wall_vector(wall_id, data):
+        for wall in data['walls']:
+            if wall['id'] == wall_id:
+                start_point = [p for p in data['points'] if p['id'] == wall['start']][0]
+                end_point = [p for p in data['points'] if p['id'] == wall['end']][0]
+                return (end_point['x'] - start_point['x'], end_point['y'] - start_point['y'])
+        return (0, 0)
+
+def get_length(wall_id, data):
+    vector = get_wall_vector(wall_id, data)
+    # print(vector)
+    return math.sqrt(vector[0]**2 + vector[1]**2)
 
 def process(data, angle=0, center=(0,0)):
     new_data = deepcopy(data)
@@ -31,8 +43,12 @@ def process(data, angle=0, center=(0,0)):
     new_data['geometry']['points'] = new_points
     
     # add wall length
-    # !TODO
-    
+    geometry = new_data['geometry']
+
+    for item in new_data['geometry']['walls']:
+        length = get_length(item['id'], geometry)
+        item['length'] = length
+        
     return new_data
 
 def main():
