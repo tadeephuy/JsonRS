@@ -34,9 +34,6 @@ def process(data, angle=0, center=(0,0)):
     
     return new_data
 
-data = json.load(open('./capture_CE02119B-871A-4331-AB05-AA90CE679FC9 1.json', 'rb'))
-processed = process(data)
-
 def main():
     st.title("Process JSON RoomSketcher")
     col1,col2 = st.columns(2)
